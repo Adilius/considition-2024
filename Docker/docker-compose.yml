@@ -1,0 +1,18 @@
+name: considition-2024
+
+services:
+  be:
+    image: sywor/considition2024:latest
+    ports:
+      - '8080:8080'
+    environment:
+      - DB_CONNECTION_STRING=Server=db;Database=Considition2024;User Id=sa;Password=Kalle123!;TrustServerCertificate=True;
+      - CONSIDITION_API_KEY=ce0ac7ff-e609-49ac-bb0c-fdda42a6e1c4
+    depends_on:
+      - db
+    restart: unless-stopped
+  db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Kalle123!
