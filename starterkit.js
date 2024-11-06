@@ -14,7 +14,7 @@ let gameLengthMonths = obj.gameLengthInMonths;
 let generations = 10000000;
 let generationCounter = 1;
 let populationSize = 50;
-let mutationRate = 0.01;
+let mutationRate = 0.05;
 
 const actions = ["Skip", "IkeaFoodCoupon", "IkeaDeliveryCheck", "IkeaCheck", "GiftCard", "HalfInterestRate", "NoInterestRate"]
 
@@ -26,7 +26,7 @@ function generateRandomParams() {
     let customerId = 0;
     for (let customer of obj.customers) {
         params["Customer" + customerId + "name"] = customer.name;
-        params["Customer" + customerId + "months"] = Math.floor(Math.random() * (gameLengthMonths + 1));
+        params["Customer" + customerId + "months"] = Math.floor(Math.random() * (gameLengthMonths) * 4);
         params["Customer" + customerId + "interest"] = Math.round(Math.random() * 100) / 100;
         customerId++;
     }
@@ -194,7 +194,7 @@ async function runGeneticAlgorithm(){
         console.log("Generation", gen + 1, "done. Best score:", bestScore.score);
         population = newPopulation;
         generationCounter++;
-        if(generationCounter % 100 == 0){
+        if(generationCounter % 50 == 0){
             callAPI(population[0], submitToServer = true);
         }
     }
