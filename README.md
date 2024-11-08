@@ -45,7 +45,7 @@ A [Genetic Algorithm](https://en.wikipedia.org/wiki/Genetic_algorithm) in this p
 **Result:** The best chromosome from the final generation is considered the optimal solution.
 
 
-### Diagram
+### Genetic Algorithm Flowchart
 
 ```mermaid
 graph TD
@@ -56,7 +56,9 @@ graph TD
     E --> F[Mutate Offspring]
     F --> G{Generations Completed?}
     G -- Yes --> H[Output Best Chromosome]
-    G -- No --> C
+    G -- No --> I{Every 50 Generations?}
+    I -- Yes --> J[Send Best Chromosome to API]
+    I -- No --> C
 
     subgraph Genetic Algorithm
         B
@@ -65,25 +67,7 @@ graph TD
         E
         F
         G
+        I
+        J
     end
-
-    subgraph Docker Setup
-        I[Install Docker]
-        J[Set API Key in docker-compose.yml]
-        K[Run docker compose up -d]
-    end
-
-    subgraph Project Setup
-        L[Clone Repository]
-        M[Install Dependencies]
-        N[Run Project]
-    end
-
-    A --> L
-    L --> M
-    M --> N
-    N --> I
-    I --> J
-    J --> K
-    K --> B
 ```
