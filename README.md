@@ -49,14 +49,12 @@ A [Genetic Algorithm](https://en.wikipedia.org/wiki/Genetic_algorithm) in this p
 
 ```mermaid
 graph TD
-    A[Start] --> B[Initialize Population]
-    B --> C[Evaluate Fitness]
-    C --> D[Select Top 50% Chromosomes]
-    D --> E[Crossover to Create Offspring]
-    E --> F[Mutate Offspring]
-    F --> G{Generations Completed?}
-    G -- Yes --> H[Output Best Chromosome]
-    G -- No --> I{Every 50 Generations?}
+    A[Start] --> B[Initialize a random Population]
+    B --> C[Evaluate Fitness using the API]
+    C --> D[Select Top 50% Chromosomes by fitness]
+    D --> E[Crossover of two chromosomes to Create Offspring]
+    E --> F[Mutate Offspring with 5% mutation rate]
+    F --> I{Every 50 Generations:}
     I -- Yes --> J[Send Best Chromosome to API]
     I -- No --> C
 
@@ -66,7 +64,6 @@ graph TD
         D
         E
         F
-        G
         I
         J
     end
