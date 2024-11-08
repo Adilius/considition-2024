@@ -2,9 +2,9 @@ const https = require("https");
 const fs = require("fs");
 const axios = require('axios');
 
-const gameUrl = "localhost:8080";
-//const gameUrl = "api.considition.com"; // Change to your own URL
-const apiKey = "ce0ac7ff-e609-49ac-bb0c-fdda42a6e1c4"; // API-key is sent in mail inbox
+const gameUrl = "http://localhost:8080";
+//const gameUrl = "api.considition.com/game"; // Change to your own URL
+const apiKey = ""; // API-key is sent in mail inbox
 const mapFile = "Map-Gothenburg.json"; // Change map here
 //const mapFile = "Map-Nottingham.json"; // Change map here
 
@@ -131,14 +131,17 @@ function crossover(chromosome1, chromosome2) {
 async function callAPI(chromosome, submitToServer = false) {
     const gameInput = chromosomeToGameInput(chromosome);
 
-    let url = gameUrl.includes('localhost') ? `http://${gameUrl}/game` : `https://${gameUrl}/game`;
-    if(submitToServer){
-        url = "https://api.considition.com/game";
+    let url = gameUrl;
+    /*if(submitToServer){
+        url = "api.considition.com/game";
         console.log("Submitting to Server API");
-    }
+    }*/
 
+    console.log("Calling API with url", url);
     try {
-        const response = await axios.post(url, gameInput, {
+        const response = await axios.post(
+            url,
+            gameInput, {
             headers: {
                 "Content-Type": "application/json",
                 "x-api-key": apiKey,
@@ -159,7 +162,7 @@ async function callAPI(chromosome, submitToServer = false) {
     }
 }
 
-async function callAPIWithRetry(chromosome, retries = 5, delay = 1000) {
+async function callAPIWithRetry(chromosome, retries = 5, delay = 2000) {
     try {
         return await callAPI(chromosome);
     } catch (error) {
